@@ -1,52 +1,47 @@
 
-  // Function to determine marker color based on depth
-  function getColor(depth) {
-    if (depth < 10) {
-      hue = 120 - (20*1);            // Green
-    } else if (depth < 30) {
-      hue = 120 - (20*2);            // Light Green
-    } else if (depth < 50) {
-      hue = 120 - (20*3);            // Yellow
-    } else if (depth < 70) {
-      hue = 120 - (20*4);            // Orange
-    } else if (depth < 90) {
-      hue = 120 - (20*5);            // Dark Orange
-     } else {
-      hue = 120 - (20*6);            // Red
-    }
-    return `hsl(${hue}, 100%, 50%)`;
+// Function to determine marker color based on depth
+function getColor(depth) {
+  if (depth < 10) {
+    hue = 120 - (20*1);            // Green
+  } else if (depth < 30) {
+    hue = 120 - (20*2);            // Light Green
+  } else if (depth < 50) {
+    hue = 120 - (20*3);            // Yellow
+  } else if (depth < 70) {
+    hue = 120 - (20*4);            // Orange
+  } else if (depth < 90) {
+    hue = 120 - (20*5);            // Dark Orange
+  } else {
+    hue = 120 - (20*6);            // Red
   }
-  // Hue (H): This is the type of color you want.
-  //  It ranges from 0 to 360, where 0 is red, 120 is green, and 240 is blue.
-  //
+
+  // Hue (H):        This is the type of color you want.
+  //                 It ranges from 0 to 360, where 0 is red, 120 is green, and 240 is blue.
   // Saturation (S): This parameter specifies the intensity of the color.
-  //  It ranges from 0% to 100%, where 0% is a shade of gray
-  //  and 100% is the full color.
-  //
-  // Lightness (L): This parameter controls how light or dark the color is.
-  //  It also ranges from 0% to 100%, where 0% is black, 50% is normal,
-  //  and 100% is white.
+  //                 It ranges from 0% to 100%, where 0% is a shade of gray
+  //                 and 100% is the full color.
+  // Lightness (L):  This parameter controls how light or dark the color is.
+  //                 It also ranges from 0% to 100%, where 0% is black, 50% is normal,
+  //                 and 100% is white.
+  return `hsl(${hue}, 100%, 50%)`;
+}
 
-
-  // URL of the JSON data
+// URL of the JSON data
 const url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson';
+
 // Use d3.json() to fetch the JSON data
 d3.json(url).then(function(data) {
 
-  // Once the data is loaded, you can work with it here
-  console.log(data); 
-
   // Initialize the Leaflet map
-  const map = L.map('map').setView([37.0902, -95.7129], 4); 
+  //
+  // The geographic center of the United States is a point approximately 20 mi (32 km) north of Belle Fourche, South Dakota
+  // The geographic latitude and longitude of the middle of the USA can be approximated to be
+  // around 39.8283° N latitude and 98.5795° W longitude in decimal numbers.
+  //
+  const map = L.map('map').setView([39.8283, -98.5795], 4); 
 
   // Add a tile layer to the map
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-
-
-
-  // ### REMOVED SET COLOR FUNCTION FROM THIS AREA
-
-
 
   // Loop through the earthquake data and create markers on the map
   data.features.forEach(function(feature) {
